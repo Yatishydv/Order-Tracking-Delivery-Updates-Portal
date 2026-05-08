@@ -16,7 +16,7 @@ class AgentController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
-            'status' => 'required|in:Shipped,Out for Delivery,Delivered',
+            'status' => 'required|in:Packed,Shipped,Out for Delivery,Delivered',
             'message' => 'nullable|string'
         ]);
 

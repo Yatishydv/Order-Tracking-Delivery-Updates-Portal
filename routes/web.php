@@ -34,7 +34,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // Agent Routes
 Route::middleware(['auth', 'role:agent'])->prefix('agent')->name('agent.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\AgentController::class, 'index'])->name('dashboard');
-    Route::post('/orders/{order}/status', [App\Http\Controllers\AgentController::class, 'updateStatus'])->name('orders.status');
+    Route::post('/orders/{order}/status', [App\Http\Controllers\AgentController::class, 'updateStatus'])->name('orders.update');
 });
 
 // Customer Routes
