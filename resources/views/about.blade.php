@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left">
-            <div class="p-5 bg-gradient-blue text-white rounded-5 shadow-lg">
+            <div class="p-5 bg-gradient-warm text-white rounded-5 shadow-lg">
                 <h3 class="fw-bold mb-4">The DeliKart Promise</h3>
                 <p class="opacity-75 mb-5">"We don't just deliver packages. We deliver peace of mind through data and precision handling. Every shipment is a commitment to excellence."</p>
                 <div class="d-flex align-items-center">

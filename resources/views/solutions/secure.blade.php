@@ -2,15 +2,15 @@
 
 @section('styles')
 <style>
-    body { background-color: #020617 !important; color: #f8fafc !important; }
-    .main-content-wrapper { background: #020617; }
-    .secure-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(59, 130, 246, 0.2); backdrop-filter: blur(10px); }
-    .text-accent-glow { color: #3b82f6; text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+    body { background-color: #1a1514 !important; color: #f8fafc !important; }
+    .main-content-wrapper { background: #1a1514; }
+    .secure-card { background: rgba(56, 44, 42, 0.5); border: 1px solid rgba(229, 107, 85, 0.2); backdrop-filter: blur(10px); }
+    .text-accent-glow { color: #e56b55; text-shadow: 0 0 20px rgba(229, 107, 85, 0.5); }
 </style>
 @endsection
 
 @section('content')
-<div class="py-5" style="background: radial-gradient(circle at top right, #1e293b, #020617);">
+<div class="py-5" style="background: radial-gradient(circle at top right, #382c2a, #1a1514);">
     <div class="container py-5">
         <div class="text-center mb-5" data-aos="zoom-in">
             <h6 class="text-accent-glow fw-bold text-uppercase tracking-widest mb-3">Priority Classification: Level 5</h6>
@@ -22,7 +22,7 @@
             <div class="col-lg-7 p-0">
                 <img src="{{ asset('images/secure.png') }}" class="w-100 h-100" style="object-fit: cover; min-height: 500px;" alt="Secure Vault">
             </div>
-            <div class="col-lg-5 p-5 d-flex align-items-center" style="background: #0f172a;">
+            <div class="col-lg-5 p-5 d-flex align-items-center" style="background: #2d2422;">
                 <div>
                     <h3 class="fw-bold mb-4"><i class="fas fa-lock text-accent me-2"></i> Bio-metric Protocols</h3>
                     <p class="opacity-75 mb-4">Every hand-off in the Secure network requires a dual-factor biometric verification. No consignment is ever moved without verified operative identification.</p>

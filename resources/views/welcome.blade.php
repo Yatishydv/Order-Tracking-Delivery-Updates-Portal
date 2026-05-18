@@ -54,7 +54,7 @@
 </div>
 
 <!-- Social Proof / Stats -->
-<div class="py-5 bg-gradient-blue text-white">
+<div class="py-5 bg-gradient-warm text-white">
     <div class="container py-5 text-center">
         <div class="row g-4">
             <div class="col-md-3">

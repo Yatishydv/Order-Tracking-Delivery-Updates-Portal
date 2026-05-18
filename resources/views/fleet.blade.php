@@ -17,7 +17,7 @@
     .status-card:hover { border-color: var(--accent); transform: translateY(-5px); }
     .map-container {
         height: 600px;
-        background: #0f172a;
+        background: #2d2422;
         border-radius: 2rem;
         position: relative;
         overflow: hidden;
@@ -33,7 +33,7 @@
     .map-data-box {
         position: absolute;
         bottom: 30px; left: 30px;
-        background: rgba(15, 23, 42, 0.8);
+        background: rgba(45, 36, 34, 0.8);
         backdrop-filter: blur(10px);
         padding: 2rem;
         border-radius: 1.5rem;

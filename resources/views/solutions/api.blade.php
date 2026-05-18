@@ -3,7 +3,7 @@
 @section('styles')
 <style>
     .api-hero {
-        background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url("{{ asset('images/api.png') }}");
+        background: linear-gradient(rgba(45, 36, 34, 0.9), rgba(45, 36, 34, 0.9)), url("{{ asset('images/api.png') }}");
         background-size: cover;
         background-position: center;
         min-height: 60vh;
@@ -12,7 +12,7 @@
         color: white;
     }
     .code-window-premium {
-        background: #0f172a;
+        background: #2d2422;
         border-radius: 1.5rem;
         box-shadow: 0 50px 100px rgba(0,0,0,0.5);
         border: 1px solid rgba(255,255,255,0.1);
@@ -53,7 +53,7 @@
                     </div>
                     <span class="small text-white-50 font-monospace">POST /api/v1/shipments/create</span>
                 </div>
-                <div class="p-5 font-monospace" style="background: #020617; color: #38bdf8; font-size: 0.95rem;">
+                <div class="p-5 font-monospace" style="background: #1a1514; color: #fdba74; font-size: 0.95rem;">
                     <div class="mb-2"><span class="text-pink">{</span></div>
                     <div class="ms-4 mb-2"><span class="text-white">"origin":</span> <span class="text-success">"Global Hub 01"</span>,</div>
                     <div class="ms-4 mb-2"><span class="text-white">"destination":</span> <span class="text-success">"Retailer Node 42"</span>,</div>

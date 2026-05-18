@@ -17,12 +17,29 @@
 
     <style>
         :root {
-            --primary: #0f172a;
-            --sidebar-bg: #1e293b;
-            --accent: #3b82f6;
-            --bg-dashboard: #f1f5f9;
+            --primary: #2d2422;
+            --sidebar-bg: #382c2a;
+            --accent: #e56b55; /* Warm, humanized coral/terracotta instead of tech blue */
+            --bg-dashboard: #fdfbfb; /* Warmer off-white */
             --glass: rgba(255, 255, 255, 0.9);
+            
+            /* Bootstrap Primary Overrides */
+            --bs-primary: #e56b55;
+            --bs-primary-rgb: 229, 107, 85;
         }
+
+        .btn-primary {
+            --bs-btn-bg: var(--accent);
+            --bs-btn-border-color: var(--accent);
+            --bs-btn-hover-bg: #cf5e49;
+            --bs-btn-hover-border-color: #cf5e49;
+            --bs-btn-active-bg: #cf5e49;
+            --bs-btn-active-border-color: #cf5e49;
+        }
+
+        .text-primary { color: var(--accent) !important; }
+        .bg-primary { background-color: var(--accent) !important; }
+        .border-primary { border-color: var(--accent) !important; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -68,7 +85,7 @@
         .dropdown-item:hover { background: #f8fafc; color: var(--accent); transform: translateX(5px); }
 
         /* PREMIUM FOOTER */
-        .footer-premium { background: #0f172a; color: white; padding: 120px 0 60px; margin-top: 0; position: relative; }
+        .footer-premium { background: var(--primary); color: white; padding: 120px 0 60px; margin-top: 0; position: relative; }
         .footer-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: white; margin-bottom: 2.5rem; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
         .footer-link { color: rgba(255, 255, 255, 0.5); text-decoration: none; display: block; margin-bottom: 1.25rem; transition: 0.3s; font-weight: 500; font-size: 0.95rem; }
         .footer-link:hover { color: var(--accent); transform: translateX(10px); }
@@ -90,7 +107,7 @@
         .hover-lift { transition: 0.3s; }
         .hover-lift:hover { transform: translateY(-10px); }
         
-        .bg-gradient-blue { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .bg-gradient-warm { background: linear-gradient(135deg, var(--sidebar-bg) 0%, var(--primary) 100%); }
     </style>
     @yield('styles')
 </head>
@@ -223,12 +240,12 @@
                     
                     <div class="d-flex align-items-center gap-3">
                         @auth
-                            <a class="btn btn-dark px-4 py-2 border-0" href="{{ route('home') }}" style="border-radius: 0.85rem; font-weight: 700; background: #0f172a;">
+                            <a class="btn btn-dark px-4 py-2 border-0" href="{{ route('home') }}" style="border-radius: 0.85rem; font-weight: 700; background: var(--primary);">
                                 <i class="fas fa-gauge-high me-2"></i> DASHBOARD
                             </a>
                         @else
                             <a class="nav-link fw-bold px-3 d-none d-xl-block" href="{{ route('login') }}">Sign In</a>
-                            <a class="btn btn-primary px-4 py-2" href="{{ route('register') }}" style="background: #3b82f6; border: none; border-radius: 0.85rem; font-weight: 700; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);">Join Network</a>
+                            <a class="btn btn-primary px-4 py-2" href="{{ route('register') }}" style="background: var(--accent); border: none; border-radius: 0.85rem; font-weight: 700; box-shadow: 0 10px 20px rgba(229, 107, 85, 0.2);">Join Network</a>
                         @endauth
                     </div>
                 </div>

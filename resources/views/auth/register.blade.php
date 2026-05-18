@@ -70,7 +70,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label small fw-bold text-uppercase tracking-wider">Full Name</label>
-                                <input type="text" name="name" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('name') is-invalid @enderror" value="{{ old('name') }}" required autofocus placeholder="John Doe">
+                                <input type="text" name="name" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('name') is-invalid @enderror" value="{{ old('name') }}" required autofocus placeholder="Yash Rao">
                                 @error('name')
                                     <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror

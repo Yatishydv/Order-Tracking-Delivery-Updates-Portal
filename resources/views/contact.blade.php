@@ -46,11 +46,11 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Full Name</label>
-                                <input type="text" class="form-control py-3" placeholder="John Doe">
+                                <input type="text" class="form-control py-3" placeholder="Yash Rao">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Email Address</label>
-                                <input type="email" class="form-control py-3" placeholder="john@example.com">
+                                <input type="email" class="form-control py-3" placeholder="yashrao@example.com">
                             </div>
                             <div class="col-12">
                                 <label class="form-label small fw-bold">Subject</label>

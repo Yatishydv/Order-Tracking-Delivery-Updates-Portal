@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<div class="bg-gradient-blue text-white py-5 position-relative overflow-hidden" style="min-height: 80vh; display: flex; align-items: center;">
+<div class="bg-gradient-warm text-white py-5 position-relative overflow-hidden" style="min-height: 80vh; display: flex; align-items: center;">
     <div class="container position-relative" style="z-index: 2;">
         <div class="row align-items-center g-5">
             <div class="col-lg-6" data-aos="fade-right">
