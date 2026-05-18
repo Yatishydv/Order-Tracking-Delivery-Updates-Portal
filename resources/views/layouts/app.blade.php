@@ -41,6 +41,51 @@
         .bg-primary { background-color: var(--accent) !important; }
         .border-primary { border-color: var(--accent) !important; }
 
+        /* Premium UI Overrides */
+        .shadow-sm { box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important; }
+        .shadow { box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; }
+        .shadow-lg { box-shadow: 0 20px 50px rgba(0,0,0,0.07) !important; }
+
+        .card {
+            border-radius: 1.25rem;
+            border: 1px solid rgba(0,0,0,0.03) !important;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+            border-color: rgba(0,0,0,0.05) !important;
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #fff !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 4px rgba(229, 107, 85, 0.15) !important;
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            border-radius: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(229, 107, 85, 0.3) !important;
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            border-radius: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 0.5em 0.8em;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: {{ request()->is('admin*', 'agent*', 'customer*') ? 'var(--bg-dashboard)' : '#ffffff' }};
@@ -92,7 +137,19 @@
 
         /* DASHBOARD SPECIFIC */
         @if(request()->is('admin*', 'agent*', 'customer*'))
-        .dashboard-nav { background: white; border-bottom: 1px solid #e2e8f0; height: 75px; display: flex; align-items: center; padding: 0 2.5rem; position: sticky; top: 0; z-index: 100; }
+        .dashboard-nav { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(0,0,0,0.03); 
+            height: 75px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 2.5rem; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
         .sidebar { background: var(--sidebar-bg); color: white; min-height: 100vh; width: 280px; position: fixed; left: 0; top: 0; padding: 2.5rem 1.5rem; }
         .main-content { margin-left: 280px; padding: 3rem 4rem; min-height: 100vh; }
         .nav-link-db { color: rgba(255, 255, 255, 0.6); padding: 1rem 1.25rem; border-radius: 0.85rem; margin-bottom: 0.75rem; text-decoration: none; display: flex; align-items: center; font-weight: 600; transition: 0.3s; }
@@ -121,7 +178,7 @@
                     <i class="fas fa-cube fs-2 text-accent me-3"></i>
                     <span class="brand-text fs-3">DeliKart</span>
                 </a>
-                <div class="mt-3 small text-muted text-uppercase tracking-widest fw-bold" style="font-size: 0.65rem; opacity: 0.6;">{{ Auth::user()->role }} Intelligence Center</div>
+                <div class="mt-3 small text-white-50 text-uppercase tracking-widest fw-bold" style="font-size: 0.65rem; opacity: 0.8;">{{ Auth::user()->role }} Intelligence Center</div>
             </div>
 
             <nav class="nav flex-column">
@@ -133,7 +190,7 @@
                     <a class="nav-link-db {{ request()->is('customer*') ? 'active' : '' }}" href="{{ route('customer.orders') }}"><i class="fas fa-box-archive"></i> My Cargo</a>
                 @endif
                 
-                <div class="px-3 mt-5 mb-3 small text-muted text-uppercase fw-bold" style="font-size: 0.65rem; opacity: 0.5;">Platform View</div>
+                <div class="px-3 mt-5 mb-3 small text-white-50 text-uppercase fw-bold" style="font-size: 0.65rem; opacity: 0.8;">Platform View</div>
                 <a class="nav-link-db" href="{{ url('/') }}"><i class="fas fa-house-chimney"></i> Brand Home</a>
                 <a class="nav-link-db" href="{{ route('fleet') }}"><i class="fas fa-satellite"></i> Network Status</a>
                 <a class="nav-link-db" href="{{ route('contact') }}"><i class="fas fa-headset"></i> Support Desk</a>

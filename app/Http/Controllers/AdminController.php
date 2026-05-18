@@ -30,8 +30,9 @@ class AdminController extends Controller
 
         $orders = $query->with(['customer', 'agent'])->latest()->paginate(10)->withQueryString();
         $agents = User::where('role', 'agent')->get();
+        $pendingAgents = User::where('requested_role', 'agent')->where('role', '!=', 'agent')->get();
 
-        return view('admin.dashboard', compact('stats', 'orders', 'agents'));
+        return view('admin.dashboard', compact('stats', 'orders', 'agents', 'pendingAgents'));
     }
 
     public function assignAgent(Request $request, Order $order)
@@ -51,5 +52,15 @@ class AdminController extends Controller
         ]);
 
         return back()->with('success', 'Agent assigned successfully.');
+    }
+
+    public function approveAgent(User $user)
+    {
+        $user->update([
+            'role' => 'agent',
+            'requested_role' => null
+        ]);
+
+        return back()->with('success', 'Agent approved successfully.');
     }
 }

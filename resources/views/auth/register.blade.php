@@ -70,7 +70,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label small fw-bold text-uppercase tracking-wider">Full Name</label>
-                                <input type="text" name="name" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('name') is-invalid @enderror" value="{{ old('name') }}" required autofocus placeholder="Yash Rao">
+                                <input type="text" name="name" class="form-control form-control-lg border-0 bg-light text-dark py-3 px-4 rounded-3 @error('name') is-invalid @enderror" value="{{ old('name') }}" required autofocus placeholder="Yash Rao">
                                 @error('name')
                                     <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
@@ -78,7 +78,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label small fw-bold text-uppercase tracking-wider">Email Address</label>
-                                <input type="email" name="email" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('email') is-invalid @enderror" value="{{ old('email') }}" required placeholder="name@example.com">
+                                <input type="email" name="email" class="form-control form-control-lg border-0 bg-light text-dark py-3 px-4 rounded-3 @error('email') is-invalid @enderror" value="{{ old('email') }}" required placeholder="name@example.com">
                                 @error('email')
                                     <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
@@ -87,15 +87,20 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label small fw-bold text-uppercase tracking-wider">Password</label>
-                                    <input type="password" name="password" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('password') is-invalid @enderror" required placeholder="••••••••">
+                                    <input type="password" name="password" class="form-control form-control-lg border-0 bg-light text-dark py-3 px-4 rounded-3 @error('password') is-invalid @enderror" required placeholder="••••••••">
                                     @error('password')
                                         <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label small fw-bold text-uppercase tracking-wider">Confirm</label>
-                                    <input type="password" name="password_confirmation" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3" required placeholder="••••••••">
+                                    <input type="password" name="password_confirmation" class="form-control form-control-lg border-0 bg-light text-dark py-3 px-4 rounded-3" required placeholder="••••••••">
                                 </div>
+                            </div>
+                            
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" name="request_agent" class="form-check-input" id="requestAgent">
+                                <label class="form-check-label small text-muted" for="requestAgent">Apply to be a Delivery Agent (Requires Admin Approval)</label>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100 py-3 mb-4 fw-bold shadow-lg">

@@ -73,6 +73,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => 'customer',
+            'requested_role' => isset($data['request_agent']) ? 'agent' : null,
         ]);
     }
 }

@@ -70,7 +70,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label small fw-bold text-uppercase tracking-wider">Email Address</label>
-                                <input type="email" name="email" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus placeholder="name@company.com">
+                                <input type="email" name="email" class="form-control form-control-lg border-0 bg-light text-dark py-3 px-4 rounded-3 @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus placeholder="name@company.com">
                                 @error('email')
                                     <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
@@ -83,7 +83,7 @@
                                         <a class="small fw-bold text-decoration-none" href="{{ route('password.request') }}">Recover?</a>
                                     @endif
                                 </div>
-                                <input type="password" name="password" class="form-control form-control-lg border-0 bg-light py-3 px-4 rounded-3 @error('password') is-invalid @enderror" required placeholder="••••••••">
+                                <input type="password" name="password" class="form-control form-control-lg border-0 bg-light text-dark py-3 px-4 rounded-3 @error('password') is-invalid @enderror" required placeholder="••••••••">
                                 @error('password')
                                     <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror

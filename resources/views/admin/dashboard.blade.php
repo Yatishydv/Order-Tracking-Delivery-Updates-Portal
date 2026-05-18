@@ -18,7 +18,7 @@
                 <div class="bg-primary bg-opacity-10 p-3 rounded-4">
                     <i class="fas fa-boxes-stacked text-primary fs-4"></i>
                 </div>
-                <span class="badge bg-light text-muted fw-bold">TOTAL</span>
+                <span class="badge bg-light text-dark fw-bold">TOTAL</span>
             </div>
             <h6 class="text-muted small fw-bold">Consignments</h6>
             <h3 class="fw-bold mb-0">{{ $stats['total'] }}</h3>
@@ -30,7 +30,7 @@
                 <div class="bg-success bg-opacity-10 p-3 rounded-4">
                     <i class="fas fa-check-double text-success fs-4"></i>
                 </div>
-                <span class="badge bg-light text-muted fw-bold">DONE</span>
+                <span class="badge bg-light text-dark fw-bold">DONE</span>
             </div>
             <h6 class="text-muted small fw-bold">Delivered</h6>
             <h3 class="fw-bold mb-0 text-success">{{ $stats['delivered'] }}</h3>
@@ -42,7 +42,7 @@
                 <div class="bg-warning bg-opacity-10 p-3 rounded-4">
                     <i class="fas fa-clock text-warning fs-4"></i>
                 </div>
-                <span class="badge bg-light text-muted fw-bold">WAITING</span>
+                <span class="badge bg-light text-dark fw-bold">WAITING</span>
             </div>
             <h6 class="text-muted small fw-bold">In Pipeline</h6>
             <h3 class="fw-bold mb-0 text-warning">{{ $stats['pending'] }}</h3>
@@ -54,13 +54,50 @@
                 <div class="bg-info bg-opacity-10 p-3 rounded-4">
                     <i class="fas fa-truck-fast text-info fs-4"></i>
                 </div>
-                <span class="badge bg-light text-muted fw-bold">LIVE</span>
+                <span class="badge bg-light text-dark fw-bold">LIVE</span>
             </div>
             <h6 class="text-muted small fw-bold">On Route</h6>
             <h3 class="fw-bold mb-0 text-info">{{ $stats['active'] }}</h3>
         </div>
     </div>
 </div>
+
+@if(isset($pendingAgents) && $pendingAgents->count() > 0)
+<div class="card border-0 shadow-sm mb-5 border-start border-warning border-4" data-aos="fade-up">
+    <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold mb-0 text-warning"><i class="fas fa-users-cog me-2"></i> Pending Agent Requests ({{ $pendingAgents->count() }})</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="bg-light text-dark small text-uppercase fw-bold">
+                    <tr>
+                        <th class="px-4 py-3">Applicant Name</th>
+                        <th class="py-3">Email Address</th>
+                        <th class="py-3">Requested On</th>
+                        <th class="text-end px-4 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($pendingAgents as $applicant)
+                    <tr>
+                        <td class="px-4 fw-bold">{{ $applicant->name }}</td>
+                        <td>{{ $applicant->email }}</td>
+                        <td>{{ $applicant->created_at->format('M d, Y') }}</td>
+                        <td class="text-end px-4">
+                            <form action="{{ route('admin.approve_agent', $applicant) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-success fw-bold px-3 rounded-pill">Approve Agent</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endif
 
 <div class="card border-0 shadow-lg" data-aos="fade-up">
     <div class="card-header bg-white py-4 px-4 border-0">
@@ -72,7 +109,7 @@
                 <form action="{{ route('admin.dashboard') }}" method="GET" class="d-flex gap-2">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" name="search" class="form-control border-0 bg-light" placeholder="Search ID or Product..." value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control border-0 bg-light text-dark" placeholder="Search ID or Product..." value="{{ request('search') }}">
                     </div>
                     <button type="submit" class="btn btn-dark px-4">Filter</button>
                 </form>
@@ -81,7 +118,7 @@
     </div>
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
-            <thead class="bg-light text-muted small text-uppercase fw-bold">
+            <thead class="bg-light text-dark small text-uppercase fw-bold">
                 <tr>
                     <th class="px-4 py-3">Reference</th>
                     <th class="py-3">Client</th>
@@ -159,7 +196,7 @@
                 @csrf
                 <div class="modal-body p-4 pt-0">
                     <label class="form-label small fw-bold text-muted mb-2">Select Field Personnel</label>
-                    <select name="agent_id" class="form-select border-0 bg-light py-3" required>
+                    <select name="agent_id" class="form-select border-0 bg-light text-dark py-3" required>
                         <option value="">-- SEARCH PERSONNEL --</option>
                         @foreach($agents as $agent)
                             <option value="{{ $agent->id }}">{{ $agent->name }}</option>
@@ -191,7 +228,7 @@
                         <div class="col-md-6">
                             <label class="form-label small fw-bold text-muted">Customer Account</label>
                             @php $customers = \App\Models\User::where('role', 'customer')->get(); @endphp
-                            <select name="customer_id" class="form-select border-0 bg-light py-3" required>
+                            <select name="customer_id" class="form-select border-0 bg-light text-dark py-3" required>
                                 <option value="">Select Client...</option>
                                 @foreach($customers as $customer)
                                     <option value="{{ $customer->id }}">{{ $customer->name }} ({{ $customer->email }})</option>
@@ -200,15 +237,15 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label small fw-bold text-muted">Consignment Name</label>
-                            <input type="text" name="product_name" class="form-control border-0 bg-light py-3" placeholder="e.g. MacBook Pro M3" required>
+                            <input type="text" name="product_name" class="form-control border-0 bg-light text-dark py-3" placeholder="e.g. MacBook Pro M3" required>
                         </div>
                         <div class="col-12">
                             <label class="form-label small fw-bold text-muted">Delivery Address</label>
-                            <textarea name="address" class="form-control border-0 bg-light py-3" rows="3" placeholder="Full destination address..." required></textarea>
+                            <textarea name="address" class="form-control border-0 bg-light text-dark py-3" rows="3" placeholder="Full destination address..." required></textarea>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label small fw-bold text-muted">Estimated Delivery</label>
-                            <input type="datetime-local" name="estimated_delivery" class="form-control border-0 bg-light py-3" required>
+                            <input type="datetime-local" name="estimated_delivery" class="form-control border-0 bg-light text-dark py-3" required>
                         </div>
                     </div>
                 </div>

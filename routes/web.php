@@ -29,6 +29,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
     Route::resource('orders', App\Http\Controllers\OrderController::class);
     Route::post('orders/{order}/assign', [App\Http\Controllers\AdminController::class, 'assignAgent'])->name('orders.assign');
+    Route::post('approve-agent/{user}', [App\Http\Controllers\AdminController::class, 'approveAgent'])->name('approve_agent');
 });
 
 // Agent Routes
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'role:agent'])->prefix('agent')->name('agent.')->grou
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/orders', [App\Http\Controllers\TrackingController::class, 'index'])->name('orders');
     Route::get('/tracking/{order}', [App\Http\Controllers\TrackingController::class, 'show'])->name('tracking');
+    Route::post('/request-agent', [App\Http\Controllers\TrackingController::class, 'requestAgent'])->name('request_agent');
 });
 
 // Real-time API (Internal)

@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold mb-0">Field Manifests</h2>
-    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 fw-bold">{{ $orders->count() }} Active Tasks</span>
+    <span class="badge bg-primary bg-opacity-10 text-dark border px-3 py-2 fw-bold">{{ $orders->count() }} Active Tasks</span>
 </div>
 
 @if($orders->isEmpty())
@@ -20,7 +20,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-                        <span class="fw-bold text-primary">#{{ $order->id }}</span>
+                        <span class="fw-bold text-dark badge bg-light border px-2 py-1">#{{ $order->id }}</span>
                         <span class="badge bg-light text-dark border px-2 py-1 small">{{ $order->status }}</span>
                     </div>
                     <div class="card-body">
@@ -57,7 +57,7 @@
                             <div class="modal-body p-4">
                                 <div class="mb-4">
                                     <label class="form-label small fw-bold mb-2">New Intelligence Status</label>
-                                    <select name="status" class="form-select bg-light border-0 py-3" required>
+                                    <select name="status" class="form-select bg-light text-dark border-0 py-3" required>
                                         <option value="Packed" {{ $order->status == 'Packed' ? 'selected' : '' }}>Packed</option>
                                         <option value="Shipped" {{ $order->status == 'Shipped' ? 'selected' : '' }}>Shipped</option>
                                         <option value="Out for Delivery" {{ $order->status == 'Out for Delivery' ? 'selected' : '' }}>Out for Delivery</option>
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="mb-0">
                                     <label class="form-label small fw-bold mb-2">Internal Note / Customer Message</label>
-                                    <textarea name="message" class="form-control bg-light border-0 py-3" rows="3" placeholder="Describe the current update..."></textarea>
+                                    <textarea name="message" class="form-control bg-light text-dark border-0 py-3" rows="3" placeholder="Describe the current update..."></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer border-top-0">

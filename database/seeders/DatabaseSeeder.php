@@ -26,22 +26,22 @@ class DatabaseSeeder extends Seeder
         // Delivery Agents
         $agent1 = User::factory()->create([
             'name' => 'Agent Alex',
-            'email' => 'alex@track.com',
+            'email' => 'agent1@track.com',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'agent',
         ]);
 
         User::factory()->create([
             'name' => 'Agent Sarah',
-            'email' => 'sarah@track.com',
+            'email' => 'agent2@track.com',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'agent',
         ]);
 
         // Customers
         $customer = User::factory()->create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'name' => 'Yash Rao',
+            'email' => 'user@track.com',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'customer',
         ]);

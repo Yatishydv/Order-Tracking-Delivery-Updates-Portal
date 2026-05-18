@@ -31,14 +31,33 @@
     .intel-card {
         border-left: 4px solid var(--primary);
     }
+
+    /* Progress Bar CSS */
+    .track-bar-horizontal { position: relative; display: flex; justify-content: space-between; margin: 3rem 0; }
+    .track-bar-horizontal::before { content: ''; position: absolute; top: 25px; left: 10%; right: 10%; height: 4px; background: #e2e8f0; z-index: 1; border-radius: 2px; }
+    .track-progress-line { position: absolute; top: 25px; left: 10%; height: 4px; background: var(--accent); z-index: 2; transition: width 1s ease; border-radius: 2px; box-shadow: 0 0 10px rgba(229,107,85,0.5); }
+    .track-node { width: 54px; height: 54px; background: white; border: 4px solid #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #94a3b8; transition: all 0.4s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .track-node.completed { background: var(--accent); border-color: rgba(229, 107, 85, 0.3); color: white; transform: scale(1.05); }
+    .track-node.active { background: white; border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 8px rgba(229, 107, 85, 0.15); transform: scale(1.1); }
+    
+    /* Timeline CSS */
+    .timeline-real { border-left: 3px solid #f1f5f9; padding-left: 30px; position: relative; margin-left: 15px; }
+    .timeline-item-real { position: relative; padding-bottom: 30px; }
+    .timeline-dot-real { position: absolute; left: -38px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: #cbd5e1; border: 3px solid white; box-shadow: 0 0 0 3px #f1f5f9; transition: 0.3s; }
+    .timeline-item-real.active .timeline-dot-real { background: var(--accent); box-shadow: 0 0 0 5px rgba(229, 107, 85, 0.2); }
+    .timeline-item-real.completed .timeline-dot-real { background: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+    
+    .tracking-hero { overflow: hidden; }
+    .hero-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(229,107,85,0.15) 0%, rgba(0,0,0,0) 70%); top: -300px; left: 50%; transform: translateX(-50%); z-index: 0; }
 </style>
 @endsection
 
 @section('content')
 <div class="tracking-hero">
-    <div class="container text-center" data-aos="fade-down">
-        <h6 class="text-uppercase tracking-widest fw-bold opacity-75 mb-3">Live Intelligence Manifest</h6>
-        <h1 class="display-4 fw-bold">Cargo ID #{{ $order->id }}</h1>
+    <div class="hero-glow"></div>
+    <div class="container text-center position-relative z-1" data-aos="fade-down">
+        <h6 class="text-uppercase tracking-widest fw-bold opacity-75 mb-3 text-white-50"><i class="fas fa-satellite me-2"></i> Live Intelligence Manifest</h6>
+        <h1 class="display-4 fw-bold mb-3">Cargo ID #{{ substr($order->id, -8) }}</h1>
         <p class="lead opacity-75">Providing 100% transparency through real-time delivery updates.</p>
     </div>
 </div>
@@ -49,12 +68,12 @@
             <div class="card border-0 shadow-2xl p-4 p-md-5 mb-4" data-aos="zoom-in">
                 <div class="row align-items-center mb-5">
                     <div class="col-md-7">
-                        <div class="d-flex align-items-center mb-2">
+                        <div class="d-flex align-items-center mb-3">
                             <div class="live-pulse"></div>
-                            <span class="text-success fw-bold small">LIVE TRACKING ACTIVE</span>
+                            <span class="text-success fw-bold small tracking-widest">LIVE SAT-LINK ACTIVE</span>
                         </div>
-                        <h2 class="fw-bold mb-1">{{ $order->product_name }}</h2>
-                        <p class="text-muted mb-0">Current status: <span class="badge bg-primary px-3 py-2 fw-bold ms-2">{{ strtoupper($order->status) }}</span></p>
+                        <h2 class="fw-bold mb-2">{{ $order->product_name }}</h2>
+                        <p class="text-muted mb-0 fw-medium">Status: <span class="badge bg-primary text-dark bg-opacity-10 px-3 py-2 fw-bold ms-2 border">{{ strtoupper($order->status) }}</span></p>
                     </div>
                     <div class="col-md-5 text-md-end mt-3 mt-md-0">
                         <div class="p-3 bg-light rounded-4 d-inline-block">

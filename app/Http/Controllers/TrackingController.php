@@ -32,4 +32,14 @@ class TrackingController extends Controller
             'estimated_delivery' => $order->estimated_delivery ? $order->estimated_delivery->format('Y-m-d H:i:s') : null,
         ]);
     }
+
+    public function requestAgent(Request $request)
+    {
+        $user = auth()->user();
+        if ($user->role === 'customer' && $user->requested_role !== 'agent') {
+            $user->update(['requested_role' => 'agent']);
+            return back()->with('success', 'Application to become an Agent has been submitted and is pending admin approval.');
+        }
+        return back();
+    }
 }
