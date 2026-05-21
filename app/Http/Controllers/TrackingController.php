@@ -7,16 +7,30 @@ use Illuminate\Http\Request;
 
 class TrackingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = auth()->user()->orders()->latest()->get();
+        $query = auth()->user()->orders();
+
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('id', 'like', "%{$request->search}%")
+                  ->orWhere('product_name', 'like', "%{$request->search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->latest()->get();
         return view('customer.orders', compact('orders'));
     }
 
     public function show(Order $order)
     {
-        // Ensure user owns the order
-        if ($order->user_id !== auth()->id()) {
+        // Ensure user is the customer, the assigned agent, or an admin
+        $user = auth()->user();
+        if ($order->user_id !== $user->id && $order->assigned_agent_id !== $user->id && $user->role !== 'admin') {
             abort(403);
         }
 

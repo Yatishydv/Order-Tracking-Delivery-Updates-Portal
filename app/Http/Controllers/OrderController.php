@@ -11,10 +11,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_id' => 'required|exists:users,id',
+            'customer_id' => 'required',
             'product_name' => 'required|string',
             'address' => 'required|string',
-            'estimated_delivery' => 'required|date'
+            'estimated_delivery' => 'required|date',
+            'image_url' => 'nullable|string'
         ]);
 
         $order = Order::create([
@@ -22,6 +23,7 @@ class OrderController extends Controller
             'product_name' => $request->product_name,
             'address' => $request->address,
             'estimated_delivery' => $request->estimated_delivery,
+            'image_url' => $request->image_url,
             'status' => 'Order Placed'
         ]);
 

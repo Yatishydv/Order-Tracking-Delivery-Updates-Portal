@@ -6,7 +6,7 @@ use MongoDB\Laravel\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['user_id', 'product_name', 'address', 'status', 'assigned_agent_id', 'estimated_delivery'])]
+#[Fillable(['user_id', 'product_name', 'address', 'status', 'assigned_agent_id', 'estimated_delivery', 'image_url'])]
 class Order extends Model
 {
     public function customer()

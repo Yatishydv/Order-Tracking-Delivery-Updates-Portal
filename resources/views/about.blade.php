@@ -1,71 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Hero Section -->
-<div class="py-5 bg-light overflow-hidden">
-    <div class="container py-5">
-        <div class="row align-items-center g-5 min-vh-75">
-            <div class="col-lg-6" data-aos="fade-right">
-                <h6 class="text-primary fw-bold text-uppercase mb-3 tracking-widest">Our Legacy</h6>
-                <h1 class="display-3 fw-bold mb-4">The Future of <span class="text-primary">Global Movement.</span></h1>
-                <p class="lead text-muted mb-5">Founded in 2024, DeliKart was built on a single premise: that logistics should be a source of intelligence, not a source of stress. Today, we manage the most transparent shipping network on the planet.</p>
-                <div class="row g-4 mb-5">
-                    <div class="col-6">
-                        <h4 class="fw-bold mb-1">Global HQ</h4>
-                        <p class="small text-muted mb-0">Tech-Forward Architecture</p>
-                    </div>
-                    <div class="col-6">
-                        <h4 class="fw-bold mb-1">1,200+</h4>
-                        <p class="small text-muted mb-0">System Operatives</p>
-                    </div>
-                </div>
+<div class="container-fluid px-4 px-xl-5 py-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 mt-4">
+            
+            <div class="text-center mb-5">
+                <div class="badge bg-dark bg-opacity-10 text-dark rounded-pill px-3 py-2 mb-3 fw-bold border border-dark border-opacity-10">Our Story</div>
+                <h1 class="display-4 fw-bold text-dark mb-4" style="letter-spacing: -0.03em;">Revolutionizing the final mile.</h1>
+                <p class="lead text-muted mx-auto" style="max-width: 600px;">We built DeliKart to fix a broken system. Shipping shouldn't be a black box of stress and uncertainty.</p>
             </div>
-            <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-                <img src="{{ asset('images/about.png') }}" class="img-fluid rounded-5 shadow-2xl hover-lift" alt="DeliKart Headquarters">
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="container py-5 my-5">
-    <div class="row g-5 align-items-center">
-        <div class="col-lg-6" data-aos="fade-right">
-            <h2 class="display-5 fw-bold mb-4">Engineering Certainty</h2>
-            <p class="text-muted lead mb-4">Our mission is to eliminate the 'black box' of shipping. By providing customers, agents, and admins with a unified intelligence feed, we ensure that every node in the supply chain is synchronized.</p>
-            <div class="d-flex align-items-center mb-3">
-                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                    <i class="fas fa-eye text-primary"></i>
+            <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80" alt="Warehouse Operations" class="img-fluid rounded-4 shadow-sm mb-5 w-100" style="height: 400px; object-fit: cover;">
+
+            <div class="row g-5 mb-5">
+                <div class="col-md-6">
+                    <h3 class="fw-bold mb-3">The Problem</h3>
+                    <p class="text-muted" style="line-height: 1.8;">Traditional courier services rely on outdated technology and hub-and-spoke models that delay your packages. When you hand over a package, it enters a void of vague updates and missed delivery windows.</p>
                 </div>
-                <div>
-                    <h5 class="fw-bold mb-0">Radical Transparency</h5>
-                    <p class="small text-muted mb-0">Real-time polling for every single manifest.</p>
+                <div class="col-md-6">
+                    <h3 class="fw-bold mb-3">Our Solution</h3>
+                    <p class="text-muted" style="line-height: 1.8;">We leverage an active crowd-sourced network of local delivery professionals powered by our cutting-edge routing algorithm. This means direct, point-to-point delivery with live GPS tracking from start to finish.</p>
                 </div>
             </div>
-            <div class="d-flex align-items-center">
-                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                    <i class="fas fa-shield-heart text-primary"></i>
-                </div>
-                <div>
-                    <h5 class="fw-bold mb-0">Absolute Integrity</h5>
-                    <p class="small text-muted mb-0">Secure handling protocols for every gram of cargo.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6" data-aos="fade-left">
-            <div class="p-5 bg-gradient-warm text-white rounded-5 shadow-lg">
-                <h3 class="fw-bold mb-4">The DeliKart Promise</h3>
-                <p class="opacity-75 mb-5">"We don't just deliver packages. We deliver peace of mind through data and precision handling. Every shipment is a commitment to excellence."</p>
-                <div class="d-flex align-items-center">
-                    <div class="bg-white p-2 rounded-circle me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-cube text-primary"></i>
-                    </div>
-                    <div>
-                        <div class="fw-bold">Executive Board</div>
-                        <div class="small text-white-50">DeliKart Logistics Intelligence</div>
-                    </div>
+
+            <div class="card bg-light border-0 rounded-4 p-5 text-center mt-5">
+                <h2 class="fw-bold mb-4">Join our mission</h2>
+                <p class="text-muted mb-4 mx-auto" style="max-width: 500px;">Whether you're a business looking to scale your local delivery, or a driver wanting to earn on your own schedule, there's a place for you at DeliKart.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ route('register') }}" class="btn btn-dark px-4 py-2 rounded-pill fw-bold shadow-sm">Sign Up Now</a>
+                    <a href="{{ route('contact') }}" class="btn btn-outline-dark px-4 py-2 rounded-pill fw-bold">Contact Us</a>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+@include('partials.footer')
 @endsection
