@@ -1,0 +1,186 @@
+# Order Tracking & Delivery Updates Portal - Comprehensive Technical Documentation
+
+This document contains a super detailed breakdown of the entire project architecture, including all Models, Controllers, Routes, and Database schema details. This is ideal for presentation notes or technical reference.
+
+---
+
+## 1. Core Architecture & Tech Stack
+- **Framework:** Laravel 12 (PHP 8.2+)
+- **Database:** MongoDB (using `mongodb/laravel-mongodb` package)
+- **Frontend:** Laravel Blade, Bootstrap 5, custom CSS (Vanilla)
+- **Build Tool:** Vite
+- **Authentication:** Laravel UI (Bootstrap scaffolding)
+- **Architecture Pattern:** MVC (Model-View-Controller)
+
+---
+
+## 2. Database Models (MongoDB Collections)
+
+The application uses MongoDB as its primary datastore. Eloquent models have been adapted to use the MongoDB connection.
+
+### A. User Model (`App\Models\User`)
+Extends `MongoDB\Laravel\Auth\User`.
+- **Purpose:** Handles all user authentication and role management.
+- **Fields:**
+  - `_id`: Auto-generated MongoDB ObjectId.
+  - `name`: String. Full name of the user.
+  - `email`: String. Unique email address.
+  - `password`: String. Hashed password.
+  - `role`: String. Determines access level. Enum: `['customer', 'admin', 'agent']`. Default is `customer`.
+  - `requested_role`: String (Nullable). Used when a customer applies to become a driver (`agent`).
+  - `created_at`, `updated_at`: Timestamps.
+- **Relationships:**
+  - `orders()`: HasMany relationship to the `Order` model (orders placed by this user).
+  - `assignedOrders()`: HasMany relationship to the `Order` model (orders assigned to this user if they are an agent).
+
+### B. Order Model (`App\Models\Order`)
+Extends `MongoDB\Laravel\Eloquent\Model`.
+- **Purpose:** Represents a shipment/order in the system.
+- **Fields:**
+  - `_id`: Auto-generated MongoDB ObjectId. Used as the tracking ID.
+  - `user_id`: ObjectId. References the customer who owns the order.
+  - `product_name`: String. Name of the item being shipped.
+  - `address`: String. Delivery destination address.
+  - `estimated_delivery`: Date. Expected delivery date.
+  - `status`: String. Current stage of delivery. Enum: `['Order Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered']`. Default: `'Order Placed'`.
+  - `assigned_agent_id`: ObjectId (Nullable). References the agent/driver assigned to deliver this order.
+  - `image_url`: String (Nullable). URL of the product image.
+  - `created_at`, `updated_at`: Timestamps.
+- **Relationships:**
+  - `customer()`: BelongsTo relationship to the `User` model (foreign key `user_id`).
+  - `agent()`: BelongsTo relationship to the `User` model (foreign key `assigned_agent_id`).
+  - `updates()`: HasMany relationship to the `OrderUpdate` model (tracks history of status changes).
+
+### C. OrderUpdate Model (`App\Models\OrderUpdate`)
+Extends `MongoDB\Laravel\Eloquent\Model`.
+- **Purpose:** Maintains an immutable audit trail of status changes for an order.
+- **Fields:**
+  - `_id`: Auto-generated MongoDB ObjectId.
+  - `order_id`: ObjectId. References the parent Order.
+  - `status`: String. The status the order was changed to.
+  - `message`: String. Description of the update (e.g., "Order has been dispatched from the warehouse").
+  - `created_at`, `updated_at`: Timestamps.
+- **Relationships:**
+  - `order()`: BelongsTo relationship to the `Order` model.
+
+### D. ContactMessage Model (`App\Models\ContactMessage`)
+Extends `MongoDB\Laravel\Eloquent\Model`.
+- **Purpose:** Stores support inquiries submitted via the public Contact page.
+- **Fields:**
+  - `_id`: Auto-generated MongoDB ObjectId.
+  - `name`: String. Name of the sender.
+  - `email`: String. Email of the sender.
+  - `message`: Text. The content of the inquiry.
+  - `is_read`: Boolean. Indicates if an admin has resolved/read the message. Default: `false`.
+  - `created_at`, `updated_at`: Timestamps.
+
+---
+
+## 3. Controllers & Business Logic
+
+### A. HomeController (`App\Http\Controllers\HomeController`)
+- **`index()`**: The landing point after a user logs in. Checks `auth()->user()->role` and redirects to the appropriate dashboard (`admin.dashboard`, `agent.dashboard`, or `customer.orders`).
+
+### B. AdminController (`App\Http\Controllers\AdminController`)
+Secured by `auth` and `role:admin` middleware.
+- **`index()`**: Renders the Admin Dashboard.
+  - Calculates stats: total shipments, active drivers, total delivered.
+  - Calculates WoW (Week-over-Week) growth percentages for stats using `now()->subDays(7)` and `now()->subDays(14)`.
+  - Fetches pending agent approvals (`requested_role === 'agent'`).
+  - Fetches active agents.
+  - Fetches recent active orders.
+  - Fetches unresolved `ContactMessage` records.
+- **`assignAgent(Order $order, Request $request)`**: Assigns a specific driver (`agent_id`) to an order and updates its status to 'Packed'. Also creates an `OrderUpdate` record.
+- **`approveAgent(User $user)`**: Promotes a customer to an 'agent' role by setting `role = 'agent'` and clearing `requested_role`.
+- **`revokeAgent(User $user)`**: Demotes an agent back to 'customer' role.
+- **`shipments(Request $request)`**: Renders the "All Shipments" page with pagination. Handles real-time backend filtering via `search` and `status` query parameters.
+- **`resolveMessage(ContactMessage $message)`**: Deletes a contact message once an admin marks it as resolved.
+
+### C. AgentController (`App\Http\Controllers\AgentController`)
+Secured by `auth` and `role:agent` middleware.
+- **`index()`**: Renders the Agent Dashboard.
+  - Fetches orders specifically assigned to the logged-in agent (`assigned_agent_id === auth()->id()`).
+  - Excludes orders with 'Delivered' status from the active view.
+- **`updateStatus(Request $request, Order $order)`**: Allows the agent to progress the order status (e.g., from 'Packed' to 'Shipped'). Validates the status transition and creates a corresponding `OrderUpdate` record.
+
+### D. TrackingController (`App\Http\Controllers\TrackingController`)
+Secured by `auth` middleware (accessible to all authenticated users).
+- **`index(Request $request)`**: Renders the Customer Dashboard.
+  - Fetches orders belonging to the logged-in customer (`user_id === auth()->id()`).
+  - Handles filtering by `search` (matching ID or product name) and `status`.
+- **`show(Order $order)`**: Renders the detailed tracking page for a specific order.
+  - Includes authorization check: Only the owner, the assigned agent, or an admin can view the details.
+  - Loads the related `OrderUpdate` history to render the visual timeline.
+- **`requestAgent(Request $request)`**: Handles the form submission from a customer applying to become a driver. Sets `requested_role = 'agent'`.
+
+### E. OrderController (`App\Http\Controllers\OrderController`)
+Resource controller for Admin CRUD operations on Orders.
+- **`store()`**: Creates a new order. Handles data validation, sets the initial status to 'Order Placed', and creates the first `OrderUpdate` record.
+- **`destroy(Order $order)`**: Deletes an order from the database.
+
+---
+
+## 4. Routing Structure (`routes/web.php`)
+
+### Public Routes
+- `GET /`: Landing page (`welcome.blade.php`)
+- `GET /about`: About page
+- `GET /contact`: Contact page
+- `POST /contact-submit`: Handles contact form submissions.
+- `GET /privacy`, `/terms`, `/cookies`, `/services`, `/fleet`, `/solutions/*`: Static informational pages.
+
+### Auth Routes
+- `Auth::routes()`: Standard Laravel UI auth routes (login, register, password reset).
+- `GET /home`: Redirects based on role.
+
+### Admin Routes (Prefix: `/admin`, Middleware: `auth`, `role:admin`)
+- `GET /dashboard`: AdminController@index
+- `GET /shipments`: AdminController@shipments
+- `POST /orders/{order}/assign`: AdminController@assignAgent
+- `POST /agent/{user}/approve`: AdminController@approveAgent
+- `POST /agent/{user}/revoke`: AdminController@revokeAgent
+- `DELETE /messages/{message}`: AdminController@resolveMessage
+- `RESOURCE /orders`: OrderController (create, store, delete shipments)
+
+### Agent Routes (Prefix: `/agent`, Middleware: `auth`, `role:agent`)
+- `GET /dashboard`: AgentController@index
+- `POST /orders/{order}/status`: AgentController@updateStatus
+
+### Customer Routes (Prefix: `/customer`, Middleware: `auth`)
+- `GET /orders`: TrackingController@index
+- `GET /tracking/{order}`: TrackingController@show
+- `POST /request-agent`: TrackingController@requestAgent
+
+---
+
+## 5. Key UI/UX Implementations
+
+### Real-time Search & Filtering
+- **Frontend filtering:** Implemented via vanilla JavaScript on both Admin Shipments and Customer Orders pages. Listens to `input` events on the search bar and dynamically toggles `style.display = 'none'` on non-matching DOM elements (cards/table rows) for an instant, zero-latency feel.
+- **Backend filtering:** Handled via HTTP GET parameters (`?search=...&status=...`), processed in controllers using Eloquent queries.
+
+### Visual Design System
+- **Framework:** Bootstrap 5.
+- **Aesthetics:** Minimalist, high-contrast, black-and-white theme with soft grayscale backgrounds (`bg-light`, `#f8f9fa`).
+- **Components:**
+  - Premium rounded-pill search bars with embedded icons.
+  - Emoji-enhanced select dropdowns for statuses.
+  - Hover-lift animations (`transition: transform 0.2s`) on interactive cards and buttons.
+  - Sticky table headers (`position: sticky; top: 0`) for long data lists.
+  - Flexbox (`d-flex`) driven equal-height column layouts (`h-100`).
+
+### Tracking Timeline
+- Built using an absolute positioned horizontal line intersected by circular indicator nodes.
+- A dynamic active progress bar calculates its width mathematically based on the current step index: `($currentIndex / 4) * 100%`.
+
+---
+
+## 6. Security Considerations
+
+1. **Role Middleware:** Custom `RoleMiddleware` ensures strict boundary control. Agents cannot access `/admin` routes, and customers cannot access `/agent` routes.
+2. **Resource Authorization:** `TrackingController@show` explicitly checks that `auth()->id()` matches either the order's `user_id` or `assigned_agent_id` (unless the user is an admin). This prevents ID enumeration attacks (e.g., a user manually changing the URL to `/customer/tracking/12345` to see someone else's order).
+3. **CSRF Protection:** All `POST` and `DELETE` forms use `@csrf` directive.
+4. **Mass Assignment:** Eloquent models are protected using `$fillable` arrays.
+
+---
+*End of Document*
